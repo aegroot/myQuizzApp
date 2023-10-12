@@ -1,5 +1,7 @@
 package alex.app.myQuizzApp.domain.quizz;
 
+import alex.app.myQuizzApp.domain.quizz.question.Question;
+
 public class QuestionAnswer {
    private Question question;
 

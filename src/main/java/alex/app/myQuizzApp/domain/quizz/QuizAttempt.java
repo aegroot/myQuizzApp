@@ -6,7 +6,7 @@ public class QuizAttempt {
 
     private LocalDateTime beginTime;
     private LocalDateTime endTime;
-    Quiz quiz;
+    private Quiz quiz;
 
     QuestionAnswer[] questionAnswers;
 }

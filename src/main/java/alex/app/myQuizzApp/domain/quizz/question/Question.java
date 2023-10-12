@@ -1,16 +1,27 @@
 package alex.app.myQuizzApp.domain.quizz.question;
 
-import java.util.Map;
+import jakarta.persistence.*;
+
 import java.util.Set;
 
-public class Question {
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class Question {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
-    private QuestionType questionType;
-    private String question;
-    private Set<QuestionSubject> questionSubject;
-    private Set<Map.Entry<String,Boolean>> answers;
+    protected String question;
+    protected Set<QuestionSubject> questionSubject;
 
-    public Set<Map.Entry<String, Boolean>> getAnswers() {
-        return answers;
+    public Long getId() {
+        return id;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
 }

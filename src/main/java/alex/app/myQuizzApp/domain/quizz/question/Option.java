@@ -1,20 +1,18 @@
-package alex.app.myQuizzApp.domain.summary;
+package alex.app.myQuizzApp.domain.quizz.question;
 
-import alex.app.myQuizzApp.domain.quizz.question.QuestionSubject;
 import jakarta.persistence.*;
 
-import java.util.Set;
+import java.io.Serializable;
 
 @Entity
-public class SummaryChapter {
+class Option implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
 
-
-    @OneToMany
-    Set<QuestionSubject>subjects;
+    String option;
+    boolean isGood;
 
     public Long getId() {
         return id;
@@ -23,4 +21,7 @@ public class SummaryChapter {
     public void setId(Long id) {
         this.id = id;
     }
+
 }
+
+

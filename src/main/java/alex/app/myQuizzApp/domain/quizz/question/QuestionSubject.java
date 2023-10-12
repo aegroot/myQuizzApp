@@ -1,11 +1,10 @@
 package alex.app.myQuizzApp.domain.quizz.question;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@DiscriminatorColumn(name = "type",discriminatorType = DiscriminatorType.STRING)
 public class QuestionSubject {
     @Id
     @Column(nullable = false)

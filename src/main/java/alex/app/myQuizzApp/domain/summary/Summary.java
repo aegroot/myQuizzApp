@@ -13,6 +13,8 @@ public class Summary {
 
     //limited char count/values
     String description;
+
+    @OneToMany
     Set<SummaryChapter>chapters;
 
     public Long getId() {

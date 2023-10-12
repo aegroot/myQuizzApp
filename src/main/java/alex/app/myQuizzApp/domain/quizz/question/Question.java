@@ -6,13 +6,17 @@ import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Question {
+@DiscriminatorColumn(name="question_type",
+        discriminatorType = DiscriminatorType.STRING)
+public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    protected String question;
+    private String question;
+
+    @OneToMany
     protected Set<QuestionSubject> questionSubject;
 
     public Long getId() {

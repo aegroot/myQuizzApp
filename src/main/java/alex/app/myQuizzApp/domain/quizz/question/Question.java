@@ -7,6 +7,7 @@ public class Question {
 
     private QuestionType questionType;
     private String question;
+    private Set<QuestionSubject> questionSubject;
     private Set<Map.Entry<String,Boolean>> answers;
 
     public Set<Map.Entry<String, Boolean>> getAnswers() {

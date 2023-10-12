@@ -1,6 +1,6 @@
-package alex.app.myQuizzApp.domain.quizz;
+package alex.app.myQuizzApp.domain.quizz.question;
 
-public class Subject {
+public class QuestionSubject {
     private String name;
     private  String description;
 

@@ -5,10 +5,11 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="question_type",
-        discriminatorType = DiscriminatorType.STRING)
 public class Question {
+
+
+    @OneToMany
+    private Set<Option> answers;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)

@@ -3,6 +3,7 @@ package alex.app.myQuizzApp.domain.quizz;
 import alex.app.myQuizzApp.domain.quizz.question.Question;
 import jakarta.persistence.*;
 
+import java.time.LocalTime;
 import java.util.Set;
 
 
@@ -14,6 +15,9 @@ public class Quiz {
     private Long id;
 
     private String description;
+
+    @Column(nullable = false)
+    private LocalTime allowedTime;
 
     //set subjects from questions
     //option to restrict questions on subject(s)?

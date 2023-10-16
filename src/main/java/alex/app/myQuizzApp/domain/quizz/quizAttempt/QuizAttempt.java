@@ -5,6 +5,7 @@ import alex.app.myQuizzApp.domain.quizz.questionAnswer.QuestionAnswer;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Set;
 
 
@@ -15,8 +16,9 @@ public class QuizAttempt {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(nullable = false)
     private LocalDateTime beginTime;
-    private LocalDateTime endTime;
+    private LocalTime timeElapsed;
 
     @ManyToOne
     @JoinColumn(name = "quiz_id")
@@ -37,10 +39,6 @@ public class QuizAttempt {
         this.beginTime = beginTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
 
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
@@ -50,11 +48,14 @@ public class QuizAttempt {
         return beginTime;
     }
 
-    public LocalDateTime getEndTime() {
-        return endTime;
+
+    public void setTimeElapsed(LocalTime timeElapsed) {
+        this.timeElapsed = timeElapsed;
     }
 
-
+    public LocalTime getTimeElapsed() {
+        return timeElapsed;
+    }
 
     public Quiz getQuiz() {
         return quiz;

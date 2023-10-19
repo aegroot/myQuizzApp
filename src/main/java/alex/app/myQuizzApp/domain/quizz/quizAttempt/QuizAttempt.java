@@ -9,6 +9,8 @@ import java.time.LocalTime;
 import java.util.Set;
 
 
+//becomes unmodifiable after time elapses
+
 @Entity
 public class QuizAttempt {
     @Id
@@ -59,5 +61,25 @@ public class QuizAttempt {
 
     public Quiz getQuiz() {
         return quiz;
+    }
+
+    public int evaluate(){
+        int points=0;
+        for(QuestionAnswer ans:questionAnswers){
+            if(ans.evaluate())
+                points++;
+        }
+        return  points;
+    }
+    public int countQuestionsUnanswered(){
+        int points=0;
+
+        for(QuestionAnswer ans:questionAnswers){
+            if(ans.getAnswers()==null)
+                points++;
+        }
+
+        return  points;
+
     }
 }

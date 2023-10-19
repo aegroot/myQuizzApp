@@ -2,6 +2,7 @@ package alex.app.myQuizzApp.domain.quizz.question;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -9,7 +10,7 @@ public class Question {
 
 
     @OneToMany
-    private Set<Option> answers;
+    private List<Option> answers;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
@@ -28,5 +29,27 @@ public class Question {
         this.id = id;
     }
 
+    public void setAnswers(List<Option> answers) {
+        this.answers = answers;
+    }
 
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public void setQuestionSubject(Set<QuestionSubject> questionSubject) {
+        this.questionSubject = questionSubject;
+    }
+
+    public Set<QuestionSubject> getQuestionSubject() {
+        return questionSubject;
+    }
+
+    public List<Option> getAnswers() {
+        return answers;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
 }

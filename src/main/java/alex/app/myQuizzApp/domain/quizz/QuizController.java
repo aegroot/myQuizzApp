@@ -6,6 +6,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/quiz")
 public class QuizController {
 
+    /*
+    superuser methods
+    delete quiz
+     */
+
     @GetMapping
     public Quiz getQuizById(){
 
@@ -14,11 +19,11 @@ public class QuizController {
     @PatchMapping
     public void updateQuiz(){
         //if user not author nor admin
-        //throw 404
+        //throw 403
     }
 
     @PostMapping
-    public  void createQuiz(){
+    public void createQuiz(){
         /*needs:
         allowedTime
         questions

@@ -41,7 +41,6 @@ public class QuizAttempt {
         this.beginTime = beginTime;
     }
 
-
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
     }

@@ -29,4 +29,9 @@ public class QuizController {
         questions
          */
     }
+    @PostMapping
+    public  void favoriteQuiz(){}
+
+    @DeleteMapping
+    public void unFavoriteQuiz(){}
 }

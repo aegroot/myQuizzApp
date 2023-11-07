@@ -6,5 +6,13 @@ public class QuizAttemptService {
     // TODO: 19/10/2023
 
     @Autowired
-    QuizAttemptService quizAttemptService;
+    QuizAttemptRepository quizAttemptRepository;
+
+    public void submit(QuizAttempt attempt){
+
+
+    }
+    public QuizAttemptRepository getById(){
+        return null;
+    }
 }

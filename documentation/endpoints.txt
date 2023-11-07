@@ -1,0 +1,20 @@
+auth
+/login
+/logout
+/register
+
+quiz
+/create // user can not make public quizzes
+/delete // user can remove only their quizzes, admin can
+/publish // admin only
+/req_publish // user can request for their quiz to be published
+/revert //makes quiz private
+/view // if admin whole, if user : name ,description general overview
+
+quizAttempt
+/start
+/submit
+/cancel
+/{id}/overview
+/getAllFromUser/
+

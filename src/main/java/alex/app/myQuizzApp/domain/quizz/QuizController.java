@@ -29,7 +29,7 @@ public class QuizController {
         questions
          */
     }
-    @PostMapping
+    @PostMapping("favorite")
     public  void favoriteQuiz(){}
 
     @DeleteMapping

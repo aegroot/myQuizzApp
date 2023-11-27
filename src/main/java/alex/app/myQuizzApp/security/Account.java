@@ -11,7 +11,5 @@ public class Account {
     //20 characters
     //(underscore) letters
     //special chars
-   private String password;
-   private String email;
-   private String username;
+
 }

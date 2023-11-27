@@ -1,10 +1,7 @@
 package alex.app.myQuizzApp.domain.quizz.question;
 
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/question")
@@ -39,6 +36,27 @@ public class QuestionController {
             check if question has been approved, else continue;
                 delete question from your list
             delete the question
+         */
+    }
+
+    @PutMapping("publish/request")
+    public void requestPublish(){
+        /*
+        checks userPrincipal
+        if user add request
+        else directly publish
+         */
+    }
+    @PutMapping("publish/approve")
+    public void publishQuestion(){
+        /*
+        user must be moderator or higher
+         */
+    }
+    @PatchMapping("publish/deny")
+    public void denyQuestion(){
+        /*
+        user must be moderator or higher
          */
     }
 }

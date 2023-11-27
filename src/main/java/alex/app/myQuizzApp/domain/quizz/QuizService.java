@@ -24,7 +24,8 @@ public class QuizService {
     public Quiz getById(long id){
         var quizOptional= quizRepository.findById(id);
 
-        return quizOptional.orElseThrow();
+        return quizOptional.orElse(null);
+
     }
 
     public List<Quiz>getAll(){

@@ -5,7 +5,6 @@ import alex.app.myQuizzApp.domain.quizz.question.Question;
 import jakarta.persistence.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class QuestionAnswer {
@@ -47,12 +46,11 @@ public class QuestionAnswer {
    }
 
    public boolean evaluate(){
-     List<Option> options= question.getAnswers();
+     List<Option> options= question.getOptions();
 
      if (answers==null){return  false;}
      else if(answers.length!=options.size())
-        throw new RuntimeException("lists must be of same size");
-
+        throw new IllegalArgumentException("lists must be of same size");
 
       for (int i = 0; i <answers.length ; i++) {
          if(options.get(i).getIsRight() != answers[i]){return  false;}

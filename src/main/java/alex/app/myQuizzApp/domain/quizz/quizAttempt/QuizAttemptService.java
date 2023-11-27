@@ -9,9 +9,8 @@ public class QuizAttemptService {
     QuizAttemptRepository quizAttemptRepository;
 
     public void submit(QuizAttempt attempt){
-
-
     }
+    public void cancelAttempt(QuizAttempt attempt){}
     public QuizAttemptRepository getById(){
         return null;
     }

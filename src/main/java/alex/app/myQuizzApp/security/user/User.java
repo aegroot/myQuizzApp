@@ -9,11 +9,8 @@ import java.util.Collection;
 import java.util.List;
 
 
-@Entity
-@NamedQueries({
-        @NamedQuery(name = "User.findAll", query = "select u from User u"),
-        @NamedQuery(name = "User.findByUsername", query = "select u from User u where u.username = :username")
-})
+@Entity(name = "UserDetails")
+
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -25,8 +22,6 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
 
-    @Column(unique = true)
-    private String username;
     private UserRole role;
 
     public Long getId() {
@@ -49,7 +44,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override

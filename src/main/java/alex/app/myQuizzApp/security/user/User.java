@@ -10,7 +10,6 @@ import java.util.List;
 
 
 @Entity(name = "UserDetails")
-
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

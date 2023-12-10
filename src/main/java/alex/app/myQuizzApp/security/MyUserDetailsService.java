@@ -7,10 +7,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.Role;
+
 @Service
 public class MyUserDetailsService implements UserDetailsService {
-    @Autowired
+
+
     UserRepository userRepository;
+
+    @Autowired
+    public MyUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

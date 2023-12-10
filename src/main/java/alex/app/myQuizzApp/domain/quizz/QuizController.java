@@ -11,7 +11,7 @@ public class QuizController {
     delete quiz
      */
 
-    @GetMapping
+    @GetMapping("find")
     public Quiz getQuizById(){
 
         return null;
@@ -22,7 +22,7 @@ public class QuizController {
         //throw 403
     }
 
-    @PostMapping
+    @PostMapping("create")
     public void createQuiz(){
         /*needs:
         allowedTime
@@ -32,6 +32,6 @@ public class QuizController {
     @PostMapping("favorite")
     public  void favoriteQuiz(){}
 
-    @DeleteMapping
+    @DeleteMapping("favorite")
     public void unFavoriteQuiz(){}
 }

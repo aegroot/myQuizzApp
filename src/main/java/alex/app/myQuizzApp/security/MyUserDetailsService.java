@@ -13,6 +13,7 @@ import javax.management.relation.Role;
 public class MyUserDetailsService implements UserDetailsService {
 
 
+    @Autowired
     UserRepository userRepository;
 
     @Autowired

@@ -3,10 +3,9 @@ package alex.app.myQuizzApp.security.user;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
-@NamedQueries({
-        @NamedQuery(name = "AuthToken.findByUser_Id", query = "select a from AuthToken a where a.user.id = :id")
-})
 public class AuthToken {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -22,6 +21,8 @@ public class AuthToken {
     }
 
 
+    private LocalDateTime timeOfCreation;
+
     public AuthToken(){}
     public  AuthToken(String token,User user){
         this.token=token;
@@ -31,6 +32,7 @@ public class AuthToken {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     public User user;
+
 
 
     public void setRevoked(boolean revoked) {
@@ -44,6 +46,14 @@ public class AuthToken {
     public boolean isExpired;
 
     public boolean isRevoked;
+
+    public void setTimeOfCreation(LocalDateTime timeOfCreation) {
+        this.timeOfCreation = timeOfCreation;
+    }
+
+    public LocalDateTime getTimeOfCreation() {
+        return timeOfCreation;
+    }
 
     public void setId(Long id) {
         this.id = id;

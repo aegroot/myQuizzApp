@@ -9,17 +9,28 @@ import java.util.Collection;
 import java.util.List;
 
 
-@Entity(name = "UserDetails")
+@Entity(name = "Users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private String password;
+    public User() {
+    }
 
+
+    public User(String username, String password){
+        this.email=username;
+        this.password=password;
+
+    }
+    public String username;
     @Column(unique = true)
     private String email;
+    private String password;
+
+
 
     private UserRole role;
 
@@ -64,5 +75,13 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }

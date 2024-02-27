@@ -6,6 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -42,15 +43,9 @@ public class AuthenticationService {
 
         if(Objects.equals(hashedLogin, details.getPassword())){
 
-            String token=Jwts.builder().
-                    setSubject(dto.getUsername())
-                    .signWith(SignatureAlgorithm.HS512,secret)
-                    .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(EXPIRATION_TIME_MINUTES).toInstant()))
-                    .compact();
+            String token=generateToken(dto.getUsername());
 
             authTokenRepository.save(new AuthToken(token,details));
-
-
 
             return token;
         }
@@ -65,5 +60,31 @@ public class AuthenticationService {
         authTokenRepository.saveAll(tokens);
     }
 
-    public void register(){}
+    public String generateToken(String username) {
+       return Jwts.builder().
+                setSubject(username)
+                .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(EXPIRATION_TIME_MINUTES).toInstant()))
+                .signWith(SignatureAlgorithm.HS512,secret)
+                .compact();
+
+    }
+
+    public void register(String email, String password){
+
+        String encyptedPassWord=passwordEncoder.encode(password);
+
+        if(!emailCheck(email)){
+
+        }
+
+    }
+
+
+    private  boolean usernameCheck(String username){
+        return myUserDetailsService.existsByUsername(username);
+    }
+
+    private boolean emailCheck(String email) {
+        return myUserDetailsService.existsByEmail(email);
+    }
 }

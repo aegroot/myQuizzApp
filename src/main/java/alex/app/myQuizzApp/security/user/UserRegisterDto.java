@@ -1,12 +1,14 @@
 package alex.app.myQuizzApp.security.user;
 
-public class UserDto {
+public class UserRegisterDto {
 
     private  String username;
     private String email;
     private String password;
 
-    public UserDto(String username, String email, String password) {
+    public UserRegisterDto(){}
+
+    public UserRegisterDto(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -34,5 +36,14 @@ public class UserDto {
 
     public String getEmail() {
         return email;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

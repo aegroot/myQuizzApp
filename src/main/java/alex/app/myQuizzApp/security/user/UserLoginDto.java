@@ -11,4 +11,12 @@ public class UserLoginDto {
     public String getUsername() {
         return username;
     }
+
+    @Override
+    public String toString() {
+        return "UserLoginDto{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

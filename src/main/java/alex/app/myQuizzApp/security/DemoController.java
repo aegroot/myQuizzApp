@@ -1,10 +1,12 @@
 package alex.app.myQuizzApp.security;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import alex.app.myQuizzApp.security.user.UserLoginDto;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/test")
 public class DemoController {
@@ -12,5 +14,11 @@ public class DemoController {
     @GetMapping("example")
     public String giveExample(){
         return "there you go!";
+    }
+
+    @PostMapping("postmen")
+    public ResponseEntity<Void> postTest(){
+        System.out.println("posted");
+        return ResponseEntity.ok().build();
     }
 }

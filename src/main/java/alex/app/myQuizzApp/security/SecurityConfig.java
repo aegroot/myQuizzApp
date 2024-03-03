@@ -6,14 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -25,33 +30,40 @@ import javax.sql.DataSource;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.httpBasic(Customizer.withDefaults());
-
-        http.authorizeHttpRequests(
-                c -> c.requestMatchers(HttpMethod.GET, "/api/v1/test/example","api/v1,test,example").permitAll()
-                        .requestMatchers("api/v1/test/").hasRole("USER")
-                        .anyRequest().authenticated()
-        );
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("api/v1/test/**",
+                                "api/v1/auth/**")
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated()
+                );
 
         return http.build();
     }
 
     @Bean
-    public UserDetailsService detailsService(DataSource dataSource){
+    public AuthenticationManager authenticationManager(
+            UserDetailsService userDetailsService,
+            PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
 
-        UserDetails user=User.withUsername("tom44").password(encoder()
-                .encode("testMe")).roles(UserRole.USER.toString()).build();
+        return new ProviderManager(authenticationProvider);
+    }
 
-        UserDetails user2=User.withUsername("adil44").password(encoder()
-                .encode("testAdmin")).roles(UserRole.ADMIN.toString()).build();
+    @Bean
+    UserDetailsService userDetailsService(){
+        UserDetails user1=User.withUsername("user").password("password").roles("USER").build();
+        UserDetails user2=User.withUsername("admin").password("password").roles("ADMIN").build();
 
-        JdbcUserDetailsManager jdbcUserDetailsManager=new JdbcUserDetailsManager(dataSource);
+        InMemoryUserDetailsManager detailsService= new InMemoryUserDetailsManager();
+        detailsService.createUser(user1);
+        detailsService.createUser(user2);
 
-        jdbcUserDetailsManager.createUser(user);
-        jdbcUserDetailsManager.createUser(user2);
-
-        return  jdbcUserDetailsManager;
+        return detailsService;
     }
 
     @Bean

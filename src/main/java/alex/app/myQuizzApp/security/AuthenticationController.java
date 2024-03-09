@@ -34,7 +34,16 @@ public class AuthenticationController {
     @PostMapping("login")
     public ResponseEntity<String>loginUser(@RequestBody UserLoginDto dto){
 
-        System.out.println(dto);
-        return ResponseEntity.ok("test");
+        try{
+
+            authenticationService.login(dto);
+            return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+        }
+        catch (ResponseStatusException res){
+
+            return new ResponseEntity<>(res.getMessage(),HttpStatusCode.valueOf(403));
+        }
+
+
     }
 }

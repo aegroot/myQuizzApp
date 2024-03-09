@@ -4,6 +4,9 @@ import alex.app.myQuizzApp.security.user.*;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -11,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -21,38 +23,47 @@ public class AuthenticationService {
 
     private final AuthTokenRepository authTokenRepository;
 
+    private final AuthenticationManager authenticationManager;
+
     private final UserRepository userRepository;
 
     private final String secret="2501d9c84ec8d94402749f3fb8234f8bd5212b80137b7670023a862498aad704";
 
     public static final int EXPIRATION_TIME_MINUTES=60;
 
-
-    public AuthenticationService(PasswordEncoder passwordEncoder, UserRepository userRepository, AuthTokenRepository authTokenRepository) {
+    public AuthenticationService(PasswordEncoder passwordEncoder, UserRepository userRepository, AuthTokenRepository authTokenRepository, AuthenticationManager authenticationManager) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.authTokenRepository = authTokenRepository;
+        this.authenticationManager = authenticationManager;
     }
 
     public String login(UserLoginDto dto){
-        Optional<User> detailsOptional= userRepository.findByEmail(dto.getUsername());
 
-        String hashedLogin=passwordEncoder.encode(dto.getPassword());
+        String encodedPassword= passwordEncoder.encode(dto.getPassword());
 
-        if (detailsOptional.isEmpty())
-            return null;
+        Optional<User> detailsOptional= userRepository.findByUsername(dto.getUsername());
+        User details=detailsOptional.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        User details=detailsOptional.get();
+//        passwords match raw and encoded
+//        System.out.println(passwordEncoder.matches(dto.getPassword(),details.getPassword()));
 
-        if(Objects.equals(hashedLogin, details.getPassword())){
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(details,dto.getPassword()
+                ));
 
-            String token=generateToken(dto.getUsername());
-
-            authTokenRepository.save(new AuthToken(token,details));
-
-            return token;
-        }
-        else  return null;
+        System.out.println("managed auth");
+//
+//        Optional<User> detailsOptional= userRepository.findByUsername(dto.getUsername());
+//
+//        User details=detailsOptional.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+//
+//        String token=generateToken(dto.getUsername());
+//
+//        authTokenRepository.save(new AuthToken(token,details));
+//
+//        return token;
+        return null;
     }
 
     public void revokeUserTokens(long userId){
@@ -69,28 +80,33 @@ public class AuthenticationService {
                 .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(EXPIRATION_TIME_MINUTES).toInstant()))
                 .signWith(SignatureAlgorithm.HS512,secret)
                 .compact();
-
     }
 
     public void register(UserRegisterDto userRegisterDto){
 
-        String encryptedPassword=passwordEncoder.encode(userRegisterDto.getPassword());
-
         User newUser= new User();
 
         if(usernameCheck(userRegisterDto.getUsername())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"username already exists");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"already exists");
         }
 
         else if (emailCheck(userRegisterDto.getEmail())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"email already exists");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"already exists");
         }
+        String encryptedPassword=passwordEncoder.encode(userRegisterDto.getPassword());
+
         newUser.setEmail(userRegisterDto.getEmail());
         newUser.setUsername(userRegisterDto.getUsername());
         newUser.setPassword(encryptedPassword);
+        newUser.setRole(UserRole.USER);
+
+        System.out.println(newUser.getPassword());
 
         userRepository.save(newUser);
 
+        System.out.println (userRepository.findAll());
+
+        System.out.println(userRepository.count());
     }
 
     private  boolean usernameCheck(String username){

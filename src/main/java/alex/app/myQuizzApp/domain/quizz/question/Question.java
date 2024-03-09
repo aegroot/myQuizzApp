@@ -2,25 +2,21 @@ package alex.app.myQuizzApp.domain.quizz.question;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Question {
 
     @OneToMany
     private List<Option> options;
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(nullable = false)
     private String question;
-
-
-    //@OneToMany
-    //private Set<QuestionSubject> questionSubject;
 
     public Long getId() {
         return id;
@@ -38,8 +34,6 @@ public class Question {
         this.question = question;
     }
 
-   // public void setQuestionSubject(Set<QuestionSubject> questionSubject) {this.questionSubject = questionSubject;}
-   // public Set<QuestionSubject> getQuestionSubject() {return questionSubject;}
 
     public List<Option> getOptions() {
         return options;
@@ -48,4 +42,20 @@ public class Question {
     public String getQuestion() {
         return question;
     }
+
+    public static boolean isValid(Question question){
+        if(question.getOptions()
+                .stream()
+                .map(Option::getOption)
+                .distinct()
+                .count()!=question.getOptions().size())
+            return false;
+
+        return question.getOptions()
+                .stream()
+                .anyMatch(Option::getIsRight)&& !question.getOptions().isEmpty();
+
+    }
+
+
 }

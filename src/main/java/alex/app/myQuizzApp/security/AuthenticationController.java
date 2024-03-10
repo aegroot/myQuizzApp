@@ -36,8 +36,8 @@ public class AuthenticationController {
 
         try{
 
-            authenticationService.login(dto);
-            return new ResponseEntity<>(HttpStatusCode.valueOf(200));
+          String token =  authenticationService.login(dto);
+            return new ResponseEntity<>(token, HttpStatusCode.valueOf(200));
         }
         catch (ResponseStatusException res){
 

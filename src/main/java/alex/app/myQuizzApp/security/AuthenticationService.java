@@ -11,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
@@ -53,17 +55,14 @@ public class AuthenticationService {
                 ));
 
         System.out.println("managed auth");
-//
-//        Optional<User> detailsOptional= userRepository.findByUsername(dto.getUsername());
-//
-//        User details=detailsOptional.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//
-//        String token=generateToken(dto.getUsername());
-//
-//        authTokenRepository.save(new AuthToken(token,details));
-//
-//        return token;
-        return null;
+
+
+
+        String token=generateToken(dto.getUsername());
+
+        authTokenRepository.save(new AuthToken(token,details));
+
+        return token;
     }
 
     public void revokeUserTokens(long userId){
@@ -77,8 +76,8 @@ public class AuthenticationService {
     public String generateToken(String username) {
        return Jwts.builder().
                 setSubject(username)
+               .claim("username",username)
                 .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(EXPIRATION_TIME_MINUTES).toInstant()))
-                .signWith(SignatureAlgorithm.HS512,secret)
                 .compact();
     }
 

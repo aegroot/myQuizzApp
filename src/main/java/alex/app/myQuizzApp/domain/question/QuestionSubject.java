@@ -1,4 +1,4 @@
-package alex.app.myQuizzApp.domain.quizz.question;
+package alex.app.myQuizzApp.domain.question;
 
 
 import jakarta.persistence.*;

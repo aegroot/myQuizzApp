@@ -1,6 +1,6 @@
 package alex.app.myQuizzApp.domain.quizz;
 
-import alex.app.myQuizzApp.domain.quizz.question.Question;
+import alex.app.myQuizzApp.domain.question.Question;
 import jakarta.persistence.*;
 
 import java.time.LocalTime;

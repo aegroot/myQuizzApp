@@ -1,8 +1,6 @@
-package alex.app.myQuizzApp.domain.quizz.quizAttempt;
+package alex.app.myQuizzApp.service.quizz.quizAttempt;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 
 // TODO: 19/10/2023

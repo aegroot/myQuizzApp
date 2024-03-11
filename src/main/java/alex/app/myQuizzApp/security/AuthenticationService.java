@@ -42,7 +42,6 @@ public class AuthenticationService {
 
     public String login(UserLoginDto dto){
 
-        String encodedPassword= passwordEncoder.encode(dto.getPassword());
 
         Optional<User> detailsOptional= userRepository.findByUsername(dto.getUsername());
         User details=detailsOptional.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -55,8 +54,6 @@ public class AuthenticationService {
                 ));
 
         System.out.println("managed auth");
-
-
 
         String token=generateToken(dto.getUsername());
 

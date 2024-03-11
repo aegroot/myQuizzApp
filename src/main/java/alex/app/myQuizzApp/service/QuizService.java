@@ -1,6 +1,7 @@
-package alex.app.myQuizzApp.domain.quizz;
+package alex.app.myQuizzApp.service;
 
-import alex.app.myQuizzApp.domain.quizz.question.Question;
+import alex.app.myQuizzApp.domain.quizz.Quiz;
+import alex.app.myQuizzApp.domain.question.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalTime;

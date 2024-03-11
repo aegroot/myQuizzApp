@@ -1,8 +1,6 @@
-package alex.app.myQuizzApp.domain.quizz.questionAnswer;
+package alex.app.myQuizzApp.service.quizz.questionAnswer;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class QuestionAnswerTest {
 

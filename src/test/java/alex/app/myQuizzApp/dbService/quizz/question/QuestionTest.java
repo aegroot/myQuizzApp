@@ -1,4 +1,4 @@
-package alex.app.myQuizzApp.service.quizz.question;
+package alex.app.myQuizzApp.dbService.quizz.question;
 
 import alex.app.myQuizzApp.domain.question.Option;
 import alex.app.myQuizzApp.domain.question.Question;
@@ -35,19 +35,18 @@ public class QuestionTest {
                                 new Option("bigger than 4",false),
                                 new Option("3",true)
                         ), true
-
                 ),
                 Arguments.of(
                 List.of(
                         new Option("1",false),
                         new Option("bigger than 4",true),
                         new Option("bigger than 4",false),
-                        new Option("3",true)
-                ), false),
+                        new Option("3",true)),
+                        false),
                 Arguments.of(
                         List.of(
-
-                        ), false)
+                                ),
+                        false)
                 , Arguments.of(
                         List.of(
                                 new Option("bigger than 4",false),

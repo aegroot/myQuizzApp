@@ -1,4 +1,4 @@
-package alex.app.myQuizzApp.controller;
+package alex.app.myQuizzApp.restcontroller;
 
 
 import org.springframework.web.bind.annotation.*;

@@ -4,8 +4,8 @@ import alex.app.myQuizzApp.domain.question.Question;
 import jakarta.persistence.*;
 
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 
 @Entity
@@ -20,16 +20,13 @@ public class Quiz {
     @Column(nullable = false)
     private LocalTime allowedTime;
 
-    //set subjects from questions
-    //option to restrict questions on subject(s)?
-
     @ManyToMany
-    Set<Question> questions;
+    List<Question> questions;
 
     public Quiz() {
     }
 
-    public Quiz(String description, LocalTime allowedTime, Set<Question> questions) {
+    public Quiz(String description, LocalTime allowedTime, List<Question> questions) {
         this.description=description;
         this.allowedTime=allowedTime;
         this.questions=questions;
@@ -54,8 +51,4 @@ public class Quiz {
                 Objects.equals(questions, quiz.questions);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, description, allowedTime, questions);
-    }
 }

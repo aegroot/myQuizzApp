@@ -1,4 +1,4 @@
-package alex.app.myQuizzApp.service.quizz.quizAttempt;
+package alex.app.myQuizzApp.dbService.quizz.quizAttempt;
 
 import org.junit.jupiter.api.Test;
 
